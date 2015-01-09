@@ -33,10 +33,11 @@ angular.module('ngVis', [])
             transclude: false,
             scope: {
                 data: '=',
+                timeline: '=',
                 options: '='
             },
             link: function (scope, element, attr) {
-                var timeline = new vis.Timeline(element[0]);
+                var timeline = scope.timeline = new vis.Timeline(element[0]);
 
                 scope.$watch('data', function () {
                     timeline.clear({options: true});
