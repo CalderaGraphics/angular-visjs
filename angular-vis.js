@@ -34,6 +34,7 @@ angular.module('ngVis', [])
             transclude: false,
             scope: {
                 data: '=',
+                timeline: '=',
                 options: '=',
                 events: '='
             },
@@ -61,7 +62,7 @@ angular.module('ngVis', [])
                     }
 
                     // Create the timeline object
-                    timeline = new vis.Timeline(element[0]);
+                    timeline = scope.timeline = new vis.Timeline(element[0]);
 
                     // Attach an event handler if defined
                     angular.forEach(scope.events, function (callback, event) {
