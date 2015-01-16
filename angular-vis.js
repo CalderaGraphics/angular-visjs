@@ -4,23 +4,14 @@ angular.module('ngVis', [])
         'use strict';
         return function (data, options) {
             // Create the new dataSets
-            var dataSet = new vis.DataSet(data, options);
-
-            this.add = function (data, senderId) {
-                var response = dataSet.add(data, senderId);
-
-                return response;
-            };
-
-            this.update = function (data, senderId) {
-                var response = dataSet.update(data, senderId);
-
-                return response;
-            };
-
-            this.getDataSet = function () {
-                return dataSet;
-            };
+            return new vis.DataSet(data, options);
+        };
+    })
+    
+    .factory('VisDataView', function () {
+        'use strict';
+        return function (data, options) {
+            return new vis.DataView(data, options);
         };
     })
 
@@ -39,11 +30,13 @@ angular.module('ngVis', [])
                 events: '='
             },
             link: function (scope, element, attr) {
-                var graphEvents = [
+                var timelineEvents = [
                     'rangechange',
                     'rangechanged',
                     'timechange',
-                    'timechanged'
+                    'timechanged',
+                    'select',
+                    'finishedRedraw'
                 ];
 
                 // Declare the timeline
@@ -66,7 +59,7 @@ angular.module('ngVis', [])
 
                     // Attach an event handler if defined
                     angular.forEach(scope.events, function (callback, event) {
-                        if (graphEvents.indexOf(String(event)) >= 0) {
+                        if (timelineEvents.indexOf(String(event)) >= 0) {
                             timeline.on(event, callback);
                         }
                     });
@@ -76,10 +69,10 @@ angular.module('ngVis', [])
 
                     // Add groups and items
                     if (scope.data.groups != null) {
-                        timeline.setGroups(scope.data.groups.getDataSet());
+                        timeline.setGroups(scope.data.groups);
                     }
                     if (scope.data.items != null) {
-                        timeline.setItems(scope.data.items.getDataSet());
+                        timeline.setItems(scope.data.items);
                     }
 
                     // onLoad callback
@@ -222,10 +215,10 @@ angular.module('ngVis', [])
 
                     // Add groups and items
                     if (scope.data.groups != null) {
-                        graph.setGroups(scope.data.groups.getDataSet());
+                        graph.setGroups(scope.data.groups);
                     }
                     if (scope.data.items != null) {
-                        graph.setItems(scope.data.items.getDataSet());
+                        graph.setItems(scope.data.items);
                     }
 
                     // onLoad callback
