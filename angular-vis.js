@@ -122,7 +122,9 @@ angular.module('ngVis', [])
                     'rangechange',
                     'rangechanged',
                     'timechange',
-                    'timechanged'
+                    'timechanged',
+					'click',
+					'doubleClick'
                 ];
 
                 // Create the chart
