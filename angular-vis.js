@@ -44,10 +44,10 @@ angular.module('ngVis', [])
 
                     if (scope.data.single) {
                         timeline.clear({groups: true});
-                        timeline.setItems(scope.data.load);
+                        timeline.setItems(scope.load);
                     } else {
-                        timeline.setGroups(scope.data.load.groups);
-                        timeline.setItems(scope.data.load.items);
+                        timeline.setGroups(scope.load.groups);
+                        timeline.setItems(scope.load.items);
                     }
 
                     timeline.fit();
